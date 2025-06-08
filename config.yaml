@@ -1,0 +1,43 @@
+colors:
+  line1_color:
+  - 69
+  - 49
+  - 38
+  max_left_color: '#00FAF0'
+  max_left_hsv:
+  - 179
+  - 245
+  - 98
+  max_right_color: '#169C00'
+  max_right_hsv:
+  - 87
+  - 191
+  - 61
+  min_left_color: '#009E57'
+  min_left_hsv:
+  - 163
+  - 159
+  - 62
+  min_right_color: '#424200'
+  min_right_hsv:
+  - 60
+  - 126
+  - 26
+contour_threshold: 5000
+groundWidth: 33
+pins:
+  button: 25
+  distance_sensor:
+    ECHO1: 15
+    ECHO2: 22
+    ECHO3: 27
+    TRIG1: 14
+    TRIG2: 4
+    TRIG3: 17
+  mode: BCM
+  motor:
+    ENA: 0
+    IN1: 11
+    IN2: 9
+  servo:
+    pcapin: 3
