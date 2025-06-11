@@ -8,8 +8,8 @@ from Motor import boost
 from readConfig import config
 from Camera import init_camera, get_frame, normalize_2_middle
 from GetColorPositionFromCamera import find_color_objects
-from ColorSensor import read_color,is_nearly_color
-from YawManager import init_yaw,get_yaw_difference
+from ColorSensor import read_averaged_color, is_blue,is_red
+from YawManager import init_yaw, add_yaw, get_yaw_difference, get_initial_yaw
 
 # Global run flag
 _should_go = True
@@ -29,7 +29,7 @@ h2_l, s2_l, v2_l = config['colors']['max_left_hsv']
 LO_L = np.array((h1_l, s1_l, v1_l), np.uint8)
 HI_L = np.array((h2_l, s2_l, v2_l), np.uint8)
 
-line1_color = config['colors']['line1_color']
+blue_color_threshold = config['colors']['blue_color_threshold']
 
 
 # Shared centroid offsets
@@ -37,7 +37,12 @@ cx_r = cy_r = None
 cx_l = cy_l = None
 
 blue_line_touch = 0
+MAX_BLUE_LINE_TOUCH = 2
+
+LINE_TOUCH_ADD = 45
+
 yaw_diff = 0
+
 
 async def start_frame_gathering():
     global cx_r, cy_r, cx_l, cy_l
@@ -109,8 +114,10 @@ async def start_control_loop():
             # no object seen: just use base direction
             direction = base_dir
 
-        direction += get_yaw_difference() / 16  # adjust direction based on yaw difference
-        # speed adjustment (you could also factor in cy if desired)
+        direction += get_yaw_difference() / 10
+        # direction = base_dir + get_yaw_difference() / 10
+
+
         speed = max(0, min((speed * 2 - abs(direction / 16)), 1))
 
         print(
@@ -126,29 +133,34 @@ async def start_control_loop():
             print("Obstacle detected, boosting backward!")
             boost()
 
-############TEST########################################
-        if blue_line_touch > 0:
-            print(f"BLIE LINE DETECTED, FORCE STOPPING: {blue_line_touch}")
-            stop()
-            speed = 0
-            direction = 0
-############TEST########################################
         Move(speed, direction)
         await asyncio.sleep(0.05)
+    
+
 async def start_color_detection():
     while _should_go:
-        _, r, g, b = read_color()
-        is_blue = is_nearly_color(r, g, b, line1_color)
+        r, g, b = read_averaged_color()
+        _is_blue = is_blue(r, g, b, blue_color_threshold)
 
         global blue_line_touch
-        if is_blue:
+        if _is_blue:
+            print(get_initial_yaw())
+            add_yaw(LINE_TOUCH_ADD)
+            print(f"Yaw adjusted by {LINE_TOUCH_ADD} degrees, total yaw: {get_initial_yaw()} degrees")
+            
             blue_line_touch += 1
             print(f"Blue line touched {blue_line_touch} times")
 
-        await asyncio.sleep(0.1)
+            if blue_line_touch >= MAX_BLUE_LINE_TOUCH:
+                print(f"BLUE LINE DETECTED, FORCE STOPPING: {blue_line_touch}")
+                stop()
+
+            await asyncio.sleep(2)
+        await asyncio.sleep(0.05)
 def stop():
     global _should_go
     _should_go = False
+    print("Stopping all tasks...")
 
 async def main():
     frame_task   = asyncio.create_task(start_frame_gathering())
@@ -165,7 +177,9 @@ async def main():
         control_task.cancel()
         await asyncio.gather(frame_task, control_task, color_task, return_exceptions=True)
         print("Shutdown complete.")
-
+        
+        from RPi.GPIO import cleanup
+        cleanup()
 
 if __name__ == "__main__":
     try:

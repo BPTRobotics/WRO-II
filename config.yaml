@@ -1,8 +1,5 @@
 colors:
-  line1_color:
-  - 69
-  - 49
-  - 38
+  blue_color_threshold : 0.41
   max_left_color: '#00FAF0'
   max_left_hsv:
   - 179
@@ -24,7 +21,7 @@ colors:
   - 126
   - 26
 contour_threshold: 5000
-groundWidth: 33
+groundWidth: 29
 pins:
   button: 25
   distance_sensor:

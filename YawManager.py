@@ -6,11 +6,12 @@ imu = IMU.IMU()
 
 initial_yaw = 0.0
 
-def init_yaw():
+def init_yaw(timeout=10):
     global initial_yaw
     print("Calibrating initial yaw, please hold still...")
     initial_yaw = get_yaw()
     last_initial_yaw = initial_yaw
+    start_time = time.time()
 
     while True:
         current_yaw = get_yaw()
@@ -22,14 +23,22 @@ def init_yaw():
 
         last_initial_yaw = current_yaw
         print(f"Yaw Correction: {correction:.2f}°")
+        
+        if time.time() - start_time > timeout:
+            print("Timeout reached, using last known yaw.")
+            break
+        
 
     initial_yaw = current_yaw
     print(f"Initial Yaw set to: {initial_yaw:.2f}°")
 
 def add_yaw(yaw):
+    global initial_yaw
     initial_yaw += yaw
     initial_yaw = initial_yaw % 360  # Normalize to [0, 360)
-
+def get_initial_yaw():
+    global initial_yaw
+    return initial_yaw
 
 def get_yaw():
     """

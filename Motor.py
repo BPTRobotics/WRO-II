@@ -27,12 +27,15 @@ def stop():
 
 stop()
 
-def setSpeed(speed):
+def setSpeed(speed, isForward = True):
     if speed < 0 or speed > 1:
-        raise ValueError("Speed must be between 0 and 1")
+        raise ValueError(f"Speed must be between 0 and 1")
 
     if speed > 0.1:
-        forward()
+        if(isForward):
+            forward()
+        else:
+            backward()
     else:
         stop()
 
