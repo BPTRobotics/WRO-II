@@ -1,12 +1,13 @@
 import time
 import math
 import IMU  # Use module import, NOT direct variable imports
+import asyncio
 
 imu = IMU.IMU()
 
 initial_yaw = 0.0
 
-def init_yaw(timeout=10):
+async def init_yaw(timeout=10):
     global initial_yaw
     print("Calibrating initial yaw, please hold still...")
     initial_yaw = get_yaw()
@@ -27,6 +28,7 @@ def init_yaw(timeout=10):
         if time.time() - start_time > timeout:
             print("Timeout reached, using last known yaw.")
             break
+        await asyncio.sleep(0.005)
         
 
     initial_yaw = current_yaw
@@ -46,6 +48,7 @@ def get_yaw():
     Returns:
         float: The yaw angle in degrees.
     """
+
     imu.QMI8658_Gyro_Accel_Read()
     imu.AK09918_MagRead()
     imu.icm20948CalAvgValue()
@@ -76,7 +79,8 @@ def get_yaw_difference():
     return (current_yaw - initial_yaw + 180) % 360 - 180
 
 if __name__ == "__main__":
-    init_yaw()
+    from asyncio import run as arun
+    arun(init_yaw())
     while True:
         try:
             yaw_diff = get_yaw_difference()

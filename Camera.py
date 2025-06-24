@@ -10,7 +10,7 @@ def get_frame(cap,flip_vertical = True):
     ret, frame = cap.read()
     if not ret:
         raise IOError("Cannot read frame")
-    
+
     if flip_vertical:
         frame = cv2.flip(frame, 0)
     return frame
