@@ -11,6 +11,7 @@ from GetColorPositionFromCamera import find_color_objects
 from ColorSensor import read_averaged_color, is_blue,is_red
 from YawManager import init_yaw, add_yaw, get_yaw_difference, get_initial_yaw
 import LED
+import ButtonDirection
 
 # Global run flag
 _should_go = True
@@ -44,7 +45,8 @@ LINE_TOUCH_ADD = 45
 
 yaw_diff = 0
 
-FINAL_DIRECTION = 'right'
+FINAL_DIRECTION = 'none'
+
 
 from enum import Enum
 class LedState_c(Enum):
@@ -55,14 +57,21 @@ class LedState_c(Enum):
     CHOOSE_RIGHT = 5
 LedState = LedState_c.LOADING
 
-def updateLedDirection():
-    global LedState
-    if FINAL_DIRECTION == 'left':
-        LedState = LedState_c.CHOOSE_LEFT
-    elif FINAL_DIRECTION == 'right':
-        LedState = LedState_c.CHOOSE_RIGHT
-    else:
-        LedState = LedState_c.ALL_OFF
+async def updateFinalDirection():
+    global FINAL_DIRECTION, LedState
+    while True:
+        if ButtonDirection.isLeftPressed():
+            FINAL_DIRECTION = 'left'
+            LedState = LedState_c.CHOOSE_LEFT
+            break
+        elif ButtonDirection.isRightPressed():
+            FINAL_DIRECTION = 'right'
+            LedState = LedState_c.CHOOSE_RIGHT
+            break
+        else:
+            print("Waiting for button press...")
+            await asyncio.sleep(.75)
+    print(f"Final direction updated: {FINAL_DIRECTION}")
 
 async def start_frame_gathering():
     global cx_r, cy_r, cx_l, cy_l
@@ -103,8 +112,9 @@ async def start_frame_gathering():
         cap.release()
         print("Camera released")
 async def start_control_loop():
+    global LedState
     await init_yaw()
-    updateLedDirection()
+    LedState = LedState_c.ALL_ON
 
     while _should_go:
         distances = get_distances()
@@ -154,8 +164,9 @@ async def start_control_loop():
         if any(d < NARROWNESS for d in distances):
             print("Obstacle detected, boosting backward!")
             boost()
-
-        Move(speed, direction)
+        
+        if FINAL_DIRECTION != 'none':
+            Move(speed, direction)
 
         await asyncio.sleep(0.05)
 async def led_manager():
@@ -207,9 +218,10 @@ async def main():
     control_task = asyncio.create_task(start_control_loop())
     color_task   = asyncio.create_task(start_color_detection())
     led_task     = asyncio.create_task(led_manager())
+    button_task  = asyncio.create_task(updateFinalDirection())
 
     try:
-        await asyncio.gather(led_task,frame_task, control_task, color_task)
+        await asyncio.gather(button_task,led_task,frame_task, control_task, color_task)
     except KeyboardInterrupt:
         print("Stopping on user interrupt.")
         stop()
@@ -218,6 +230,7 @@ async def main():
         control_task.cancel()
         color_task.cancel()
         led_task.cancel()
+        button_task.cancel()
 
         await asyncio.gather(frame_task, control_task, color_task, return_exceptions=True)
         print("Shutdown complete.")
