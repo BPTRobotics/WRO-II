@@ -24,9 +24,12 @@ def setDirection(direction):
         raise ValueError("Direction must be between -1 and 1")
     
     Direction = direction * -90 + 90
-    print("Direction: ", Direction)
-    kit.servo[pcapin].angle = Direction
+    try:
+        kit.servo[pcapin].angle = Direction
+    except OSError:
+        print("Error: Servo not connected or not responding")
+        return
 
 if __name__ == "__main__":
-    setDirection(0.0)
+    setDirection(0)
     time.sleep(1)

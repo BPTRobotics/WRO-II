@@ -53,5 +53,5 @@ def boost(direction = 0,isForward = False):
 
 if __name__ == "__main__":
     for x in range(1000):
-        setSpeed(0.9)
+        setSpeed(1)
         sleep(0.1)

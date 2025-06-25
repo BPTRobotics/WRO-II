@@ -1,4 +1,10 @@
+max_distance = 200
+
 def get_direction(l, m, r):
+    l = min(l,max_distance)
+    m = min(m,max_distance)
+    r = min(r,max_distance)
+    
     total = l + m + r
     if total == 0:
         return 0.0, 0.0  # No signal, no movement

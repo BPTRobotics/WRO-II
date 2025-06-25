@@ -4,7 +4,7 @@ from Steer import setDirection
 
 if __name__ == "__main__":
     init_yaw()
-    add_yaw(45)
+    add_yaw(360)
     setDirection(.9)  # Scale yaw difference to servo range
     while True:
         try:

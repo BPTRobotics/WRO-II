@@ -7,23 +7,25 @@ distance_sensor = config["pins"]["distance_sensor"]
 TRIG1 = distance_sensor["TRIG1"]
 TRIG2 = distance_sensor["TRIG2"]
 TRIG3 = distance_sensor["TRIG3"]
+TRIG4 = distance_sensor["TRIG4"]
 
 ECHO1 = distance_sensor["ECHO1"]
 ECHO2 = distance_sensor["ECHO2"]
 ECHO3 = distance_sensor["ECHO3"]
+ECHO4 = distance_sensor["ECHO4"]
 
 # setup GPIO pins for ultrasonic sensors
-for trig in [TRIG1, TRIG2, TRIG3]:
+for trig in [TRIG1, TRIG2, TRIG3, TRIG4]:
     print("Setting up TRIG pin:", trig)
     GPIO.setup(trig, GPIO.OUT)
-for echo in [ECHO1, ECHO2, ECHO3]:
+for echo in [ECHO1, ECHO2, ECHO3, ECHO4]:
     print("Setting up ECHO pin:", echo)
     GPIO.setup(echo, GPIO.IN)
 
 
 def get_distances():
     distances = []
-    for trig, echo in [(TRIG1, ECHO1), (TRIG2, ECHO2), (TRIG3, ECHO3)]:
+    for trig, echo in [(TRIG1, ECHO1), (TRIG2, ECHO2), (TRIG3, ECHO3), (TRIG4, ECHO4)]:
         GPIO.output(trig, False)
         time.sleep(0.01)
 

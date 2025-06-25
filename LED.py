@@ -37,3 +37,8 @@ def choose_right():
         GPIO.output(x, GPIO.LOW)
     GPIO.output(LED_PINS[-1], GPIO.HIGH)
     GPIO.output(LED_PINS[-2], GPIO.HIGH)
+
+if __name__ == "__main__":
+    asyncio.run(loading())
+    all_off()
+    print("LED test complete.")

@@ -1,36 +1,49 @@
+back_threshold: 4.2
 colors:
-  blue_color_threshold : 0.41
-  max_left_color: '#00FAF0'
+  blue_color_threshold: 0.015
+  max_left_color: '#000000'
   max_left_hsv:
-  - 179
-  - 245
-  - 98
-  max_right_color: '#169C00'
+  - 0
+  - 0
+  - 0
+  max_right_color: '#07FF00'
   max_right_hsv:
-  - 87
-  - 191
-  - 61
-  min_left_color: '#009E57'
+  - 95
+  - 169
+  - 194
+  min_left_color: '#000000'
   min_left_hsv:
-  - 163
-  - 159
-  - 62
-  min_right_color: '#424200'
+  - 179
+  - 255
+  - 255
+  min_right_color: '#6B6113'
   min_right_hsv:
-  - 60
-  - 126
-  - 26
-contour_threshold: 5000
+  - 53
+  - 82
+  - 42
+  red_color_threshold: 0.015
+contour_threshold: 1047
 groundWidth: 29
 pins:
-  button: 25
+  button:
+  - 16
+  - 12
   distance_sensor:
     ECHO1: 15
-    ECHO2: 22
+    ECHO2: 24
     ECHO3: 27
+    ECHO4: 8
     TRIG1: 14
     TRIG2: 4
     TRIG3: 17
+    TRIG4: 18
+  led:
+  - 26
+  - 10
+  - 7
+  - 21
+  - 20
+  - 19
   mode: BCM
   motor:
     ENA: 0
@@ -38,13 +51,3 @@ pins:
     IN2: 9
   servo:
     pcapin: 3
-  led:
-    - 26
-    - 10
-    - 7
-    - 21
-    - 20
-    - 19
-  button:
-    - 16
-    - 12

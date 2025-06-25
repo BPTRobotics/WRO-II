@@ -1,0 +1,99 @@
+{'back_threshold': 4.2, 'colors': {'blue_color_threshold': 0.015, 'max_left_color': '#000000', 'max_left_hsv': [0, 0, 0], 'max_right_color': '#00FF00', 'max_right_hsv': [98, 255, 255], 'min_left_color': '#000000', 'min_left_hsv': [179, 255, 255], 'min_right_color': '#78651A', 'min_right_hsv': [48, 78, 47], 'red_color_threshold': 0.015}, 'contour_threshold': 3979, 'groundWidth': 29, 'pins': {'button': [16, 12], 'distance_sensor': {'ECHO1': 15, 'ECHO2': 24, 'ECHO3': 27, 'ECHO4': 8, 'TRIG1': 14, 'TRIG2': 4, 'TRIG3': 17, 'TRIG4': 18}, 'led': [26, 10, 7, 21, 20, 19], 'mode': 'BCM', 'motor': {'ENA': 0, 'IN1': 11, 'IN2': 9}, 'servo': {'pcapin': 3}}}
+Setting up TRIG pin: 14
+Setting up TRIG pin: 4
+Setting up TRIG pin: 17
+Setting up TRIG pin: 18
+Setting up ECHO pin: 15
+Setting up ECHO pin: 24
+Setting up ECHO pin: 27
+Setting up ECHO pin: 8
+QMI8658_init slave=0x6b  QMI8658Register_WhoAmI=0x5 0x7b
+
+AK09918 init Success
+
+Calibrating initial yaw, please hold still...
+Yaw Correction: -2.73°
+Final direction updated: right
+Yaw Correction: -3.55°
+Yaw Correction: -2.78°
+Yaw Correction: -2.66°
+Yaw Correction: -2.37°
+Yaw Correction: -1.86°
+Yaw Correction: -2.84°
+Yaw Correction: -2.09°
+Yaw Correction: -2.22°
+Yaw Correction: -2.35°
+Yaw Correction: -1.80°
+Yaw Correction: -2.11°
+Yaw Correction: -1.50°
+Yaw Correction: -1.93°
+Yaw Correction: -1.78°
+Yaw Correction: -1.58°
+Yaw Correction: -1.42°
+Yaw Correction: -1.75°
+Yaw Correction: -0.93°
+LED state: LedState_c.CHOOSE_RIGHT
+Yaw Correction: -1.36°
+Yaw Correction: -1.19°
+Yaw Correction: -1.04°
+Yaw Correction: -1.22°
+Yaw Correction: -1.01°
+Yaw Correction: -1.16°
+Yaw Correction: -1.63°
+Yaw Correction: -1.84°
+LED state: LedState_c.CHOOSE_RIGHT
+Yaw Correction: -1.15°
+Yaw Correction: -0.66°
+Yaw Correction: -0.70°
+Yaw Correction: -1.15°
+Yaw Correction: -0.84°
+Yaw Correction: -0.01°
+Yaw Correction: -0.81°
+Yaw Correction: -0.28°
+LED state: LedState_c.CHOOSE_RIGHT
+Yaw Correction: -1.15°
+Yaw Correction: -0.05°
+Yaw Correction: -0.51°
+Yaw Correction: -0.81°
+Initial Yaw set to: 166.13°
+Chosen: none, Base dir: -0.01, Dir: -0.01, Spd: 1.00, Distances: 39.8 82.1 37.9 5.7 Yaw diff: -0.00 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: -0.02, Dir: -0.02, Spd: 1.00, Distances: 42.4 81.0 39.5 7.4 Yaw diff: 0.00 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+LED state: LedState_c.ALL_ON
+Chosen: none, Base dir: -0.02, Dir: -0.01, Spd: 1.00, Distances: 40.1 76.9 37.7 10.9 Yaw diff: 0.00 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: -0.05, Dir: -0.04, Spd: 1.00, Distances: 42.4 71.4 35.1 16.1 Yaw diff: 0.01 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: -0.00, Dir: 0.01, Spd: 1.00, Distances: 40.1 66.3 39.7 21.5 Yaw diff: 0.01 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.02, Dir: 0.03, Spd: 1.00, Distances: 40.5 61.9 42.9 28.1 Yaw diff: 0.01 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+LED state: LedState_c.ALL_ON
+Chosen: none, Base dir: 0.03, Dir: 0.04, Spd: 1.00, Distances: 38.7 57.4 42.7 32.0 Yaw diff: 0.01 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.06, Dir: 0.08, Spd: 1.00, Distances: 37.5 51.9 46.1 39.6 Yaw diff: 0.01 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.04, Dir: 0.06, Spd: 1.00, Distances: 36.8 47.3 41.7 43.9 Yaw diff: 0.02 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.02, Dir: 0.04, Spd: 1.00, Distances: 34.5 43.5 36.5 48.6 Yaw diff: 0.02 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+LED state: LedState_c.ALL_ON
+Chosen: none, Base dir: 0.05, Dir: 0.08, Spd: 1.00, Distances: 33.3 41.7 39.5 55.0 Yaw diff: 0.02 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.05, Dir: 0.07, Spd: 1.00, Distances: 30.9 34.6 36.1 60.0 Yaw diff: 0.02 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+Chosen: none, Base dir: 0.04, Dir: 0.06, Spd: 1.00, Distances: 29.9 27.6 33.2 69.3 Yaw diff: 0.02 degreesCX_R: None, CY_R: None, CX_L: None, CY_L: None
+166.1341091039395
+Yaw adjusted by -80 degrees, total yaw: 86.1341091039395 degrees
+red line touched 1 times
+Warning: failed to read frame: Cannot read frame
+Camera released
+Shutdown complete.
+Force stopping.
+Traceback (most recent call last):
+  File "/home/rpi/Documents/WRO/MainPlayer.py", line 5, in <module>
+    from GetDistances import get_distances
+  File "/home/rpi/Documents/WRO/GetDistances.py", line 3, in <module>
+    from readConfig import config
+  File "/home/rpi/Documents/WRO/readConfig.py", line 5, in <module>
+    with open("config.yaml", "r") as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'config.yaml'
+Traceback (most recent call last):
+  File "/home/rpi/Documents/WRO/MainPlayer.py", line 5, in <module>
+    from GetDistances import get_distances
+  File "/home/rpi/Documents/WRO/GetDistances.py", line 3, in <module>
+    from readConfig import config
+  File "/home/rpi/Documents/WRO/readConfig.py", line 5, in <module>
+    with open("config.yaml", "r") as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'config.yaml'

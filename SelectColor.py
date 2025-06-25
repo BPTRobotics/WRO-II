@@ -102,7 +102,7 @@ if __name__ == "__main__":
         ("U - H", u_h, 179),
         ("U - S", u_s, 255),
         ("U - V", u_v, 255),
-        ("Contour Thresh", thresh, 5000)
+        ("Contour Thresh", thresh, 40000)
     ]:
         cv2.createTrackbar(name, "HSV Trackbars", val, maxi, lambda x: None)
 
