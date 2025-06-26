@@ -1,28 +1,28 @@
 back_threshold: 4.2
 colors:
   blue_color_threshold: 0.015
-  max_left_color: '#000000'
+  max_left_color: '#FF0000'
   max_left_hsv:
-  - 0
-  - 0
-  - 0
-  max_right_color: '#07FF00'
+  - 18
+  - 220
+  - 255
+  max_right_color: '#00FF00'
   max_right_hsv:
   - 95
-  - 169
-  - 194
-  min_left_color: '#000000'
+  - 226
+  - 183
+  min_left_color: '#FF0000'
   min_left_hsv:
-  - 179
-  - 255
-  - 255
-  min_right_color: '#6B6113'
+  - 0
+  - 168
+  - 166
+  min_right_color: '#121700'
   min_right_hsv:
-  - 53
-  - 82
-  - 42
+  - 70
+  - 137
+  - 9
   red_color_threshold: 0.015
-contour_threshold: 1047
+contour_threshold: 8377
 groundWidth: 29
 pins:
   button:

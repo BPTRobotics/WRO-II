@@ -13,7 +13,7 @@ def main():
 
     try:
         while True:
-            r, g, b = ColorSensor.read_averaged_color()
+            r, g, b = ColorSensor.read_color()
             min_r = min(min_r, r)
             min_g = min(min_g, g)
             min_b = min(min_b, b)

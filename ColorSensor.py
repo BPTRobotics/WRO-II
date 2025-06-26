@@ -44,13 +44,14 @@ def read_color():
     return r / clear / 1.5, g / clear, b / clear
 
 # Simple threshold: must be at least this high to be considered a color
-MIN_COLOR_VALUE = 0.2
+MIN_BLUE_COLOR_VALUE = 0.44
+MIN_RED_COLOR_VALUE = 0.29
 
 def is_red(r, g, b):
-    return r > g and r > b and r > MIN_COLOR_VALUE
+    return r > g and r > b and r > MIN_RED_COLOR_VALUE
 
 def is_blue(r, g, b):
-    return b > r and b > g and b > MIN_COLOR_VALUE
+    return b > r and b > g and b > MIN_BLUE_COLOR_VALUE
 
 # Init on import
 init_sensor()

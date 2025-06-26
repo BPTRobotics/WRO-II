@@ -8,7 +8,7 @@ from RobotMovementController import Move
 from readConfig import config
 from Camera import init_camera, get_frame, normalize_2_middle
 from GetColorPositionFromCamera import find_color_objects
-from ColorSensor import read_color, is_red, is_red
+from ColorSensor import read_color, is_red, is_blue
 from YawManager import init_yaw, add_yaw, get_yaw_difference, get_initial_yaw
 import LED
 import ButtonDirection
@@ -39,7 +39,8 @@ cx_r = cy_r = None
 cx_l = cy_l = None
 
 red_line_touch = 0
-MAX_red_LINE_TOUCH = 9
+blue_line_touch = 0
+MAX_LINE_TOUCH = 3
 
 line_touch_add = 90
 
@@ -60,7 +61,7 @@ LedState = LedState_c.LOADING
 
 async def updateFinalDirection():
     global FINAL_DIRECTION, LedState, line_touch_add
-    while True:
+    while _should_go:
         if ButtonDirection.isLeftPressed():
             FINAL_DIRECTION = 'left'
             LedState = LedState_c.CHOOSE_LEFT
@@ -145,7 +146,7 @@ async def start_control_loop():
         
         speed = max(0.1, min((speed * 5 - abs(direction / 16)), 1))
 
-        if (l < BACK_THRESHOLD or m < BACK_THRESHOLD or r < BACK_THRESHOLD) and b > BACK_THRESHOLD*5:
+        if (l < BACK_THRESHOLD or m < BACK_THRESHOLD or r < BACK_THRESHOLD) and b > BACK_THRESHOLD*10:
             boost()
 
         print(
@@ -192,26 +193,34 @@ async def start_color_detection():
     while _should_go:
         r, g, b = read_color()
         _is_red = is_red(r, g, b)
+        _is_blue = is_blue(r, g, b)
 
-        global red_line_touch
-        if _is_red:
+        global red_line_touch, blue_line_touch
+        if _is_red or _is_blue:
             print(Fore.YELLOW + f"{get_initial_yaw()}")
             add_yaw(line_touch_add if FINAL_DIRECTION == 'left' else -line_touch_add)
             print(Fore.YELLOW + f"Yaw adjusted by {line_touch_add} degrees, total yaw: {get_initial_yaw()} degrees")
 
-            red_line_touch += 1
-            print(Fore.LIGHTBLUE_EX + f"red line touched {red_line_touch} times")
+            if _is_red:
+                red_line_touch += 1
+                print(Fore.LIGHTBLUE_EX + f"red line touched {red_line_touch} times")
+            if _is_blue:
+                blue_line_touch += 1
+                print(Fore.LIGHTBLUE_EX + f"blue line touched {blue_line_touch} times")
 
-            if red_line_touch >= MAX_red_LINE_TOUCH:
-                print(Fore.RED + f"red LINE DETECTED, FORCE STOPPING: {red_line_touch}")
+            if red_line_touch >= MAX_LINE_TOUCH or blue_line_touch >= MAX_LINE_TOUCH:
+                print(Fore.RED + f"LINE DETECTED, FORCE STOPPING: {red_line_touch}")
                 stop()
 
-            await asyncio.sleep(2)
-        await asyncio.sleep(0.005)
+            await asyncio.sleep(1)
+        await asyncio.sleep(0.001)
 
 def stop():
-    global _should_go
+    global _should_go, FINAL_DIRECTION
+    FINAL_DIRECTION = 'none'
     _should_go = False
+    Move(0, 0)
+    
     print(Fore.RED + "Stopping all tasks...")
 
 async def main():
