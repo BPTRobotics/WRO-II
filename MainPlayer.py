@@ -64,16 +64,15 @@ async def updateFinalDirection():
         if ButtonDirection.isLeftPressed():
             FINAL_DIRECTION = 'left'
             LedState = LedState_c.CHOOSE_LEFT
-            break
         elif ButtonDirection.isRightPressed():
             FINAL_DIRECTION = 'right'
             LedState = LedState_c.CHOOSE_RIGHT
-            line_touch_add *= -1
-            break
         else:
+            FINAL_DIRECTION = 'none'
+            LedState = LedState_c.ALL_ON
             print(Fore.YELLOW + "Waiting for button press...")
-            await asyncio.sleep(.75)
-    print(Fore.CYAN + f"Final direction updated: {FINAL_DIRECTION}")
+        await asyncio.sleep(2)
+    # print(Fore.CYAN + f"Final direction updated: {FINAL_DIRECTION}")
 
 async def start_frame_gathering():
     global cx_r, cy_r, cx_l, cy_l
@@ -155,14 +154,18 @@ async def start_control_loop():
             f"Base dir: {base_dir:.2f}, "
             f"Dir: {direction:.2f}, "
             f"Spd: {speed:.2f}, "
-            f"Distances: {' '.join(f'{d:.1f}' for d in distances)}"
-            f" Yaw diff: {yaw_diff:.2f} degrees"
+            f"Distances: {' '.join(f'{d:.1f}' for d in distances)}, "
+            f"Yaw diff: {yaw_diff:.2f} degrees, "
             f"CX_R: {cx_r}, CY_R: {cy_r}, "
-            f"CX_L: {cx_l}, CY_L: {cy_l}"
+            f"CX_L: {cx_l}, CY_L: {cy_l}, "
+            f"FINAL_DIRECTION: {FINAL_DIRECTION}"
+            f"Is NONE: {FINAL_DIRECTION != 'none'}"
         )
 
-        if FINAL_DIRECTION != 'none':
-            Move(speed, direction)
+        if FINAL_DIRECTION == 'none':
+            speed = 0
+            direction = 0
+        Move(speed, direction)
 
         await asyncio.sleep(0.05)
 
@@ -193,7 +196,7 @@ async def start_color_detection():
         global red_line_touch
         if _is_red:
             print(Fore.YELLOW + f"{get_initial_yaw()}")
-            add_yaw(line_touch_add)
+            add_yaw(line_touch_add if FINAL_DIRECTION == 'left' else -line_touch_add)
             print(Fore.YELLOW + f"Yaw adjusted by {line_touch_add} degrees, total yaw: {get_initial_yaw()} degrees")
 
             red_line_touch += 1
